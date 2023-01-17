@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.yesilbilisim.website.dto.request.ImageRequestDto;
 import org.yesilbilisim.website.model.ImageModel;
 import org.yesilbilisim.website.service.ImageService;
@@ -17,14 +18,15 @@ import java.util.List;
 public class ImageController {
     private final ImageService imageService;
 
-    @PostMapping("/save/{folder}")
-    public ResponseEntity<ImageModel> saveImage(@PathVariable String folder, @RequestBody ImageRequestDto imageModel) {
-        return new ResponseEntity<>(imageService.saveImage(imageModel, folder), HttpStatus.CREATED);
+    @PostMapping("/save")
+    public ResponseEntity<ImageModel> saveImage(@RequestParam("file") MultipartFile photo,
+                                                @RequestParam("name") String name,
+                                                @RequestParam("folder") String folder) {
+        return new ResponseEntity<>(imageService.saveImage(name, folder, photo), HttpStatus.CREATED);
     }
 
     @GetMapping("/logos")
     public ResponseEntity<List<ImageModel>> getLogos() {
         return new ResponseEntity<>(imageService.getLogos(), HttpStatus.OK);
     }
-
 }

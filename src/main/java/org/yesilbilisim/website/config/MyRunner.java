@@ -14,15 +14,17 @@ public class MyRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         repository.deleteAll();
-
+        /*
         repository.save(ImageModel.builder()
-                .name("logo")
-                .path("img/logo.png")
+                .name("carousel_item")
+                .path("carousel/yilbasi_indirim.jpg")
                 .build());
 
         repository.save(ImageModel.builder()
-                .name("logo")
-                .path("img/logo_2.png")
+                .name("carousel_item")
+                .path("carousel/deneme.jpg")
                 .build());
+         */
+
     }
 }
