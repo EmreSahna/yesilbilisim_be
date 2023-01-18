@@ -1,21 +1,14 @@
 package org.yesilbilisim.website.service;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.yesilbilisim.website.dto.request.ImageRequestDto;
 import org.yesilbilisim.website.model.ImageModel;
 import org.yesilbilisim.website.repository.ImageRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Service

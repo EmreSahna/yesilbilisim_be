@@ -3,10 +3,8 @@ package org.yesilbilisim.website.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.yesilbilisim.website.dto.request.ImageRequestDto;
 import org.yesilbilisim.website.model.ImageModel;
 import org.yesilbilisim.website.service.ImageService;
 
