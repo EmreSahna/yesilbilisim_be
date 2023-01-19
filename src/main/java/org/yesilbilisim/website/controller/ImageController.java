@@ -1,6 +1,5 @@
 package org.yesilbilisim.website.controller;
 
-import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,19 +11,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/image")
-@AllArgsConstructor
 public class ImageController {
     private final ImageService imageService;
 
-    @PostMapping("/save")
-    public ResponseEntity<ImageModel> saveImage(@RequestParam("file") MultipartFile photo,
-                                                @RequestParam("name") String name,
-                                                @RequestParam("folder") String folder) {
-        return new ResponseEntity<>(imageService.saveImage(name, folder, photo), HttpStatus.CREATED);
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
     }
 
-    @GetMapping("/logos")
-    public ResponseEntity<List<ImageModel>> getLogos() {
-        return new ResponseEntity<>(imageService.getLogos(), HttpStatus.OK);
+    @PostMapping("/save/basic")
+    public ResponseEntity<ImageModel> saveImage(@RequestParam("file") MultipartFile photo,
+                                                @RequestParam("folder") String folder) {
+        return new ResponseEntity<>(imageService.saveImageBsc(folder, photo), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/save/advanced")
+    public ResponseEntity<ImageModel> saveImage(@RequestParam("file") MultipartFile photo,
+                                                @RequestParam("folder") String folder,
+                                                @RequestParam("title") String title,
+                                                @RequestParam("description") String description) {
+        return new ResponseEntity<>(imageService.saveImageAdv(folder, photo, title, description), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/slider")
+    public ResponseEntity<List<ImageModel>> getSlider() {
+        return new ResponseEntity<>(imageService.getSlider(), HttpStatus.OK);
+    }
+
+    @GetMapping("/homepage")
+    public ResponseEntity<List<ImageModel>> getHomepage() {
+        return new ResponseEntity<>(imageService.getHomepage(), HttpStatus.OK);
     }
 }
