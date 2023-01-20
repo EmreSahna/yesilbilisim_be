@@ -24,6 +24,13 @@ public class ImageController {
         return new ResponseEntity<>(imageService.saveImageBsc(folder, photo), HttpStatus.CREATED);
     }
 
+    @PostMapping("/save/mid")
+    public ResponseEntity<ImageModel> saveImage(@RequestParam("file") MultipartFile photo,
+                                                @RequestParam("folder") String folder,
+                                                @RequestParam("title") String title) {
+        return new ResponseEntity<>(imageService.saveImageMid(folder, photo, title), HttpStatus.CREATED);
+    }
+
     @PostMapping("/save/advanced")
     public ResponseEntity<ImageModel> saveImage(@RequestParam("file") MultipartFile photo,
                                                 @RequestParam("folder") String folder,

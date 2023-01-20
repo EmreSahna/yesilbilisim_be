@@ -6,8 +6,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.yesilbilisim.website.model.DescriptionalImageModel;
 import org.yesilbilisim.website.model.ImageModel;
+import org.yesilbilisim.website.model.TitledImageModel;
 import org.yesilbilisim.website.repository.DescriptionalRepository;
 import org.yesilbilisim.website.repository.ImageRepository;
+import org.yesilbilisim.website.repository.TitledRepository;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +23,12 @@ public class ImageService {
     private String uploadDir;
     private final ImageRepository imageRepository;
     private final DescriptionalRepository descriptionalRepository;
+    private final TitledRepository titledRepository;
 
-    public ImageService(ImageRepository imageRepository, DescriptionalRepository descriptionalRepository) {
+    public ImageService(ImageRepository imageRepository, DescriptionalRepository descriptionalRepository, TitledRepository titledRepository) {
         this.imageRepository = imageRepository;
         this.descriptionalRepository = descriptionalRepository;
+        this.titledRepository = titledRepository;
     }
 
     public ImageModel saveImageBsc(String folder, MultipartFile photo) {
@@ -35,6 +39,18 @@ public class ImageService {
                 .builder()
                 .filename(fileName)
                 .folder(folder)
+                .build());
+    }
+
+    public ImageModel saveImageMid(String folder, MultipartFile photo, String title) {
+        String fileName = StringUtils.cleanPath(photo.getOriginalFilename());
+        saveImage(photo, folder, fileName);
+
+        return titledRepository.save(TitledImageModel
+                .builder()
+                .filename(fileName)
+                .folder(folder)
+                .title(title)
                 .build());
     }
 
