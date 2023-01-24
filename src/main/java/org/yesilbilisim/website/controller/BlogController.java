@@ -3,6 +3,7 @@ package org.yesilbilisim.website.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.yesilbilisim.website.model.BlogInfoModel;
 import org.yesilbilisim.website.model.MediumPostModel;
 import org.yesilbilisim.website.service.BlogService;
 
@@ -18,7 +19,7 @@ public class BlogController {
     }
 
     @GetMapping("/medium")
-    public List<MediumPostModel> getMediumPosts() {
-        return blogService.getUsersMediumPosts();
+    public BlogInfoModel getMediumPosts() {
+        return blogService.getUsersMedium();
     }
 }

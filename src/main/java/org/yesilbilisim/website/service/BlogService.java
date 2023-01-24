@@ -7,6 +7,7 @@ import com.rometools.rome.io.XmlReader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.yesilbilisim.website.model.BlogInfoModel;
 import org.yesilbilisim.website.model.MediumPostModel;
 
 import java.io.ByteArrayInputStream;
@@ -28,7 +29,7 @@ public class BlogService {
         this.restTemplate = restTemplate;
     }
 
-    public List<SyndEntry> getRss() {
+    public SyndFeed getRss() {
         String rssUrl = mediumUrl + username;
         String rssContent = restTemplate.getForObject(rssUrl, String.class);
         InputStream is = new ByteArrayInputStream(rssContent.getBytes());
@@ -38,20 +39,26 @@ public class BlogService {
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return feed.getEntries();
+        return feed;
     }
 
-    public List<MediumPostModel> getUsersMediumPosts() {
-        List<SyndEntry> entries = getRss();
-
-        return entries.stream().map(
-                entry -> MediumPostModel.builder()
+    public BlogInfoModel getUsersMedium() {
+        SyndFeed feed = getRss();
+        return BlogInfoModel.builder()
+            .posts(
+                feed.getEntries().stream().map(
+                    entry -> MediumPostModel.builder()
                         .title(entry.getTitle())
                         .description(entry.getContents().get(0).getValue().split("<p>")[1].split("<\\/p>")[0])
                         .link(entry.getLink())
                         .pubDate(entry.getPublishedDate().toString())
                         .image(entry.getContents().get(0).getValue().split("src=\"")[1].split("\"")[0])
                         .build()
-        ).collect(Collectors.toList());
+                    ).collect(Collectors.toList())
+            )
+            .username(feed.getTitle().split("by")[1].split("on")[0].trim())
+            .profileLink(feed.getLink())
+            .profileImage(feed.getImage().getUrl())
+        .build();
     }
 }
