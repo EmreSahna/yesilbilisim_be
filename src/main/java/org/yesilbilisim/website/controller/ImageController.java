@@ -1,5 +1,6 @@
 package org.yesilbilisim.website.controller;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,13 +40,13 @@ public class ImageController {
         return new ResponseEntity<>(imageService.saveImageAdv(folder, photo, title, description), HttpStatus.CREATED);
     }
 
-    @GetMapping("/slider")
-    public ResponseEntity<List<ImageModel>> getSlider() {
-        return new ResponseEntity<>(imageService.getSlider(), HttpStatus.OK);
-    }
-
     @GetMapping("/homepage")
     public ResponseEntity<List<ImageModel>> getHomepage() {
         return new ResponseEntity<>(imageService.getHomepage(), HttpStatus.OK);
+    }
+
+    @GetMapping("/solutionpage")
+    public ResponseEntity<List<ImageModel>> getSolutionpage() {
+        return new ResponseEntity<>(imageService.getSolutionpage(), HttpStatus.OK);
     }
 }
