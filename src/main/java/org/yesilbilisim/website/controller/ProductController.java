@@ -48,7 +48,7 @@ public class ProductController {
     }
 
     @GetMapping("/page")
-    public ResponseEntity<List<ProductPageResponse>> getPage(@RequestParam int page, @RequestParam int size) {
+    public ResponseEntity<ProductPageResponse> getPage(@RequestParam int page, @RequestParam int size) {
         return new ResponseEntity<>(productService.getPage(page, size), HttpStatus.OK);
     }
 }

@@ -84,15 +84,21 @@ public class ProductService {
                 .build()).orElse(null);
     }
 
-    public List<ProductPageResponse> getPage(int page, int size) {
+    public ProductPageResponse getPage(int page, int size) {
         Pageable paging = PageRequest.of(page, size);
         Page<Product> pagedResult = productRepository.findAll(paging);
 
-        return pagedResult.toList().stream().map(product -> ProductPageResponse.builder()
-                .name(product.getName())
-                .price(product.getPrice())
-                .brand(product.getBrand().getName())
-                .image(product.getImages().get(0).getFolder() + "/" +product.getImages().get(0).getFilename())
-                .build()).toList();
+        return ProductPageResponse.builder()
+                .products(pagedResult.getContent().stream().map(product -> ProductResponse.builder()
+                        .name(product.getName())
+                        .description(product.getDescription())
+                        .price(product.getPrice())
+                        .brand(getBrand(product.getBrand().getId()))
+                        .images(getProductImages(product.getId()))
+                        .build()).toList())
+                .currentPage(pagedResult.getNumber())
+                .totalElements((int) pagedResult.getTotalElements())
+                .totalPages(pagedResult.getTotalPages())
+                .build();
     }
 }

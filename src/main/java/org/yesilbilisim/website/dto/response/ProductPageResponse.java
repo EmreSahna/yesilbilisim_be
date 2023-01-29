@@ -5,13 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductPageResponse {
-    private String name;
-    private String brand;
-    private double price;
-    private String image;
+    private int currentPage;
+    private int totalElements;
+    private int totalPages;
+    private List<ProductResponse> products;
 }
