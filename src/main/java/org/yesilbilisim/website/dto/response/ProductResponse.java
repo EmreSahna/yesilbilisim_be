@@ -16,6 +16,7 @@ public class ProductResponse {
     private String description;
     private double price;
     private BrandResponse brand;
+    private CategoryResponse category;
     private List<ProductImageResponse> images;
 }
 

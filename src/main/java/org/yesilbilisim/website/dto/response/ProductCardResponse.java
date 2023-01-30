@@ -1,18 +1,19 @@
-package org.yesilbilisim.website.dto.request;
+package org.yesilbilisim.website.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-public class ProductRequest {
+@NoArgsConstructor
+public class ProductCardResponse {
+    private Long id;
     private String name;
     private String description;
     private double price;
-    private Long brandId;
-    private Long categoryId;
+    private BrandResponse brand;
+    private ProductImageResponse image;
 }

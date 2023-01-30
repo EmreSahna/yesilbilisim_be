@@ -5,11 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.yesilbilisim.website.dto.request.BrandRequest;
+import org.yesilbilisim.website.dto.request.CategoryRequest;
 import org.yesilbilisim.website.dto.request.ProductRequest;
+import org.yesilbilisim.website.dto.response.ProductPageFilterResponse;
 import org.yesilbilisim.website.dto.response.ProductPageResponse;
 import org.yesilbilisim.website.dto.response.ProductResponse;
 import org.yesilbilisim.website.model.ImageModel;
 import org.yesilbilisim.website.model.Products.Brand;
+import org.yesilbilisim.website.model.Products.Category;
 import org.yesilbilisim.website.model.Products.Product;
 import org.yesilbilisim.website.model.Products.ProductImage;
 import org.yesilbilisim.website.service.ProductService;
@@ -35,6 +38,11 @@ public class ProductController {
         return new ResponseEntity<>(productService.createBrand(brandRequest), HttpStatus.CREATED);
     }
 
+    @PostMapping("/create-category")
+    public ResponseEntity<Category> createBrand(@RequestBody CategoryRequest categoryRequest) {
+        return new ResponseEntity<>(productService.createCategory(categoryRequest), HttpStatus.CREATED);
+    }
+
     @PostMapping("/create-product-image")
     public ResponseEntity<ImageModel> saveImage(@RequestParam("file") MultipartFile photo,
                                                 @RequestParam("folder") String folder,
@@ -42,7 +50,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.createProductImage(folder, photo,productId), HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-product/{id}")
+    @GetMapping("/detail/{id}")
     public ResponseEntity<ProductResponse> getProduct(@PathVariable Long id) {
         return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
     }
@@ -50,5 +58,10 @@ public class ProductController {
     @GetMapping("/page")
     public ResponseEntity<ProductPageResponse> getPage(@RequestParam int page, @RequestParam int size) {
         return new ResponseEntity<>(productService.getPage(page, size), HttpStatus.OK);
+    }
+
+    @GetMapping("/filter-menu")
+    public ResponseEntity<ProductPageFilterResponse> filterMenu() {
+        return new ResponseEntity<>(productService.getPageFilter(), HttpStatus.OK);
     }
 }

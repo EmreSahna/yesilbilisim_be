@@ -11,9 +11,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductPageResponse {
-    private int currentPage;
-    private int totalElements;
-    private int totalPages;
-    private List<ProductCardResponse> products;
+public class ProductPageFilterResponse {
+    private List<BrandResponse> brands;
+    private List<CategoryResponse> categories;
+    private double maxPrice;
 }

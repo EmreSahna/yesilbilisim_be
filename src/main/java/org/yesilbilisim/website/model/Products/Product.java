@@ -33,4 +33,11 @@ public class Product {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Brand brand;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Category category;
 }

@@ -1,4 +1,4 @@
-package org.yesilbilisim.website.dto.request;
+package org.yesilbilisim.website.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductRequest {
+public class CategoryResponse {
     private String name;
-    private String description;
-    private double price;
-    private Long brandId;
-    private Long categoryId;
 }
