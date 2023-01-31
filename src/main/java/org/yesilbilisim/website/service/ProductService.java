@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.yesilbilisim.website.dto.request.BrandRequest;
 import org.yesilbilisim.website.dto.request.CategoryRequest;
+import org.yesilbilisim.website.dto.request.FilterRequest;
 import org.yesilbilisim.website.dto.request.ProductRequest;
 import org.yesilbilisim.website.dto.response.*;
 import org.yesilbilisim.website.model.Products.Brand;
@@ -100,9 +101,23 @@ public class ProductService {
                 .build()).orElse(null);
     }
 
-    public ProductPageResponse getPage(int page, int size) {
+    public ProductPageResponse getPage(int page, int size, FilterRequest filter) {
         Pageable paging = PageRequest.of(page, size);
-        Page<Product> pagedResult = productRepository.findAll(paging);
+        Page<Product> pagedResult = null;
+        if(filter != null){
+            if(filter.getBrands().size() == 0){
+                filter.setBrands(brandRepository.findAll().stream().map(brand -> brand.getName()).toList());
+            }
+            if(filter.getCategories().size() == 0){
+                filter.setCategories(categoryRepository.findAll().stream().map(category -> category.getName()).toList());
+            }
+            if(filter.getMaxPrice() == 0){
+                filter.setMaxPrice(productRepository.findMaxPrice());
+            }
+            pagedResult = productRepository.findAllByFilter(filter.getBrands(), filter.getCategories(), filter.getMaxPrice(), paging);
+        }else{
+            pagedResult = productRepository.findAll(paging);
+        }
 
         return ProductPageResponse.builder()
                 .products(pagedResult.getContent().stream().map(product -> ProductCardResponse.builder()

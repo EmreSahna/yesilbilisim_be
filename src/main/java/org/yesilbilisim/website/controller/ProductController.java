@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.yesilbilisim.website.dto.request.BrandRequest;
 import org.yesilbilisim.website.dto.request.CategoryRequest;
+import org.yesilbilisim.website.dto.request.FilterRequest;
 import org.yesilbilisim.website.dto.request.ProductRequest;
 import org.yesilbilisim.website.dto.response.ProductPageFilterResponse;
 import org.yesilbilisim.website.dto.response.ProductPageResponse;
@@ -14,10 +15,7 @@ import org.yesilbilisim.website.model.ImageModel;
 import org.yesilbilisim.website.model.Products.Brand;
 import org.yesilbilisim.website.model.Products.Category;
 import org.yesilbilisim.website.model.Products.Product;
-import org.yesilbilisim.website.model.Products.ProductImage;
 import org.yesilbilisim.website.service.ProductService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -55,9 +53,9 @@ public class ProductController {
         return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
     }
 
-    @GetMapping("/page")
-    public ResponseEntity<ProductPageResponse> getPage(@RequestParam int page, @RequestParam int size) {
-        return new ResponseEntity<>(productService.getPage(page, size), HttpStatus.OK);
+    @PostMapping("/page")
+    public ResponseEntity<ProductPageResponse> getPage(@RequestParam int page, @RequestParam int size, @RequestBody(required = false) FilterRequest filter){
+        return new ResponseEntity<>(productService.getPage(page, size, filter), HttpStatus.OK);
     }
 
     @GetMapping("/filter-menu")
