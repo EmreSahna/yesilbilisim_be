@@ -1,6 +1,5 @@
 package org.yesilbilisim.website.service;
 
-import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
@@ -12,7 +11,6 @@ import org.yesilbilisim.website.model.MediumPostModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
