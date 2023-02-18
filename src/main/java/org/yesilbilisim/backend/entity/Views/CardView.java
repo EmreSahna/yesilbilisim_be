@@ -23,4 +23,5 @@ public class CardView {
     private String cardContent;
     private String icon;
     private ViewType type;
+    private int orderCard;
 }

@@ -3,7 +3,8 @@ package org.yesilbilisim.backend.service.impl;
 import org.springframework.stereotype.Service;
 import org.yesilbilisim.backend.dto.request.CardViewRequest;
 import org.yesilbilisim.backend.dto.request.ImageViewRequest;
-import org.yesilbilisim.backend.dto.response.CardViewHomepageResponse;
+import org.yesilbilisim.backend.dto.response.CardPageResponse;
+import org.yesilbilisim.backend.dto.response.CardViewResponse;
 import org.yesilbilisim.backend.dto.response.HomepageResponse;
 import org.yesilbilisim.backend.entity.Views.CardView;
 import org.yesilbilisim.backend.entity.Views.ImageView;
@@ -32,6 +33,7 @@ public class ViewServiceImpl implements ViewService {
             .cardContent(cardViewRequest.getCardContent())
             .icon(cardViewRequest.getIcon())
             .type(ViewType.valueOf(cardViewRequest.getType()))
+            .orderCard(cardViewRequest.getOrderCard())
         .build());
     }
 
@@ -44,13 +46,21 @@ public class ViewServiceImpl implements ViewService {
     }
 
     @Override
-    public List<CardView> getSolutions() {
-        return cardViewRepository.findSolutions();
+    public List<CardViewResponse> getSolutions() {
+        return cardViewRepository.findSolutions().stream().map(cardView -> CardViewResponse.builder()
+            .title(cardView.getTitle())
+            .icon(cardView.getIcon())
+            .url(cardView.getId())
+        .build()).collect(Collectors.toList());
     }
 
     @Override
-    public List<CardView> getServices() {
-        return cardViewRepository.findServices();
+    public List<CardViewResponse> getServices() {
+        return cardViewRepository.findServices().stream().map(cardView -> CardViewResponse.builder()
+            .title(cardView.getTitle())
+            .icon(cardView.getIcon())
+            .url(cardView.getId())
+        .build()).collect(Collectors.toList());
     }
 
     @Override
@@ -58,11 +68,20 @@ public class ViewServiceImpl implements ViewService {
         return HomepageResponse.builder()
             .sliders(imageViewRepository.findAllByType(ViewType.Carousel).stream().map(imageView -> imageView.getImage()).collect(Collectors.toList()))
             .companies(imageViewRepository.findAllByType(ViewType.Company).stream().map(imageView -> imageView.getImage()).collect(Collectors.toList()))
-            .cards(cardViewRepository.findAll().stream().map(cardView -> CardViewHomepageResponse.builder()
+            .cards(cardViewRepository.findAllByOrder().stream().map(cardView -> CardViewResponse.builder()
                     .title(cardView.getTitle())
                     .icon(cardView.getIcon())
+                    .url(cardView.getId())
                     .build()).collect(Collectors.toList())
             )
         .build();
+    }
+
+    @Override
+    public CardPageResponse getCardView(String id) {
+        return cardViewRepository.findById(id).map(cardView -> CardPageResponse.builder()
+            .title(cardView.getTitle())
+            .cardContent(cardView.getCardContent())
+        .build()).orElse(null);
     }
 }

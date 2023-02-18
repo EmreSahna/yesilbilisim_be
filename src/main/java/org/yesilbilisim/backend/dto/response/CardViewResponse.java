@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardViewHomepageResponse {
+public class CardViewResponse {
+    private String url;
     private String title;
     private String icon;
 }

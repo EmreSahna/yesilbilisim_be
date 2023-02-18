@@ -14,4 +14,5 @@ public class CardViewRequest {
     private String cardContent;
     private String icon;
     private String type;
+    private int orderCard;
 }

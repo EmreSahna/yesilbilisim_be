@@ -3,6 +3,8 @@ package org.yesilbilisim.backend.controller;
 import org.springframework.web.bind.annotation.*;
 import org.yesilbilisim.backend.dto.request.CardViewRequest;
 import org.yesilbilisim.backend.dto.request.ImageViewRequest;
+import org.yesilbilisim.backend.dto.response.CardPageResponse;
+import org.yesilbilisim.backend.dto.response.CardViewResponse;
 import org.yesilbilisim.backend.dto.response.HomepageResponse;
 import org.yesilbilisim.backend.entity.Views.CardView;
 import org.yesilbilisim.backend.entity.Views.ImageView;
@@ -30,17 +32,22 @@ public class ViewController {
     }
 
     @GetMapping("/solutions")
-    public List<CardView> getSolutions() {
+    public List<CardViewResponse> getSolutions() {
         return viewService.getSolutions();
     }
 
     @GetMapping("/services")
-    public List<CardView> getServices() {
+    public List<CardViewResponse> getServices() {
         return viewService.getServices();
     }
 
     @GetMapping("/homepage")
     public HomepageResponse getHomepage() {
         return viewService.getHomepage();
+    }
+
+    @GetMapping("/card/{id}")
+    public CardPageResponse getService(@PathVariable String id) {
+        return viewService.getCardView(id);
     }
 }

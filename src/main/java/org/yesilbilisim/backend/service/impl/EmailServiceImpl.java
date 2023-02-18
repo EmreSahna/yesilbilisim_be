@@ -16,6 +16,8 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public Email register(EmailRequest email) {
-        return null;
+        return emailRepository.save(Email.builder()
+            .email(email.getEmail())
+        .build());
     }
 }
