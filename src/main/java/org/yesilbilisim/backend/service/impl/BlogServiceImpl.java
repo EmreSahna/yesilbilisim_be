@@ -8,8 +8,8 @@ import org.yesilbilisim.backend.entity.Blogs.Blog;
 import org.yesilbilisim.backend.repository.BlogRepository;
 import org.yesilbilisim.backend.service.BlogService;
 
-import java.time.LocalDateTime;
-import java.time.Month;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,13 +23,11 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Blog createBlog(BlogRequest blogRequest) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        String blogMonth = Month.of(localDateTime.getMonthValue()).name();
-        String blogCreated = blogMonth.substring(0,1)+blogMonth.substring(1,3).toLowerCase() + " " + localDateTime.getDayOfMonth() + ","+ localDateTime.getYear();
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
         return blogRepository.save(Blog.builder()
                 .title(blogRequest.getTitle())
                 .description(blogRequest.getDescription())
-                .createdDate(blogCreated)
+                .createdDate(sdf.format(new Timestamp(System.currentTimeMillis())))
                 .thumbnailImage(blogRequest.getThumbnailImage())
                 .blogContent(blogRequest.getBlogContent())
                 .build());
