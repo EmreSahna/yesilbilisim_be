@@ -1,5 +1,6 @@
 package org.yesilbilisim.backend.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class EmailController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Email> register(@RequestBody EmailRequest email) {
+    public ResponseEntity<Email> register(@Valid @RequestBody EmailRequest email) {
         return new ResponseEntity<>(emailService.register(email), HttpStatus.OK);
     }
 }

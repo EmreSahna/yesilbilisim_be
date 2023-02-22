@@ -1,5 +1,6 @@
 package org.yesilbilisim.backend.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class ContactController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<String> saveContact(@RequestBody ContactRequest contactRequest) {
+    public ResponseEntity<String> saveContact(@Valid @RequestBody ContactRequest contactRequest) {
         return new ResponseEntity<>(contactService.createContact(contactRequest),HttpStatus.OK);
     }
 }

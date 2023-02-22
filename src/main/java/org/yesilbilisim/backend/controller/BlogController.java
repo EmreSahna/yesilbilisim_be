@@ -21,11 +21,6 @@ public class BlogController {
         this.blogService = blogService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Blog> createBlog(@RequestBody BlogRequest blogRequest) {
-        return new ResponseEntity<>(blogService.createBlog(blogRequest), HttpStatus.CREATED);
-    }
-
     @GetMapping("/id/{blogId}")
     public ResponseEntity<Blog> getBlogById(@PathVariable String blogId) {
         return new ResponseEntity<>(blogService.getBlog(blogId), HttpStatus.OK);
