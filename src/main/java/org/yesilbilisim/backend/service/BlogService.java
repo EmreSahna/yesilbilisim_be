@@ -1,6 +1,10 @@
 package org.yesilbilisim.backend.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.yesilbilisim.backend.dto.request.BlogRequest;
+import org.yesilbilisim.backend.dto.response.BlogResponse;
+import org.yesilbilisim.backend.dto.response.BlogResponseWithPaggination;
 import org.yesilbilisim.backend.dto.response.BlogsNavigatorResponse;
 import org.yesilbilisim.backend.dto.response.BlogsResponse;
 import org.yesilbilisim.backend.entity.Blogs.Blog;
@@ -11,9 +15,9 @@ public interface BlogService {
 
     Blog createBlog(BlogRequest blogRequest);
 
-    Blog getBlog(String blogId);
+    BlogResponse getBlog(String blogId);
 
-    List<BlogsResponse> getBlogs();
+    BlogResponseWithPaggination getBlogs(Pageable pageable);
 
     List<BlogsNavigatorResponse> getBlogsNavigator();
 }
