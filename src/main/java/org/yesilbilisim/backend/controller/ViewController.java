@@ -26,10 +26,12 @@ public class ViewController {
         return viewService.createCard(cardViewRequest);
     }
 
+    /*
     @PostMapping("/create-image")
     public ImageView createImage(@RequestBody ImageViewRequest imageViewRequest) {
         return viewService.createImage(imageViewRequest);
     }
+     */
 
     @GetMapping("/solutions")
     public List<CardViewResponse> getSolutions() {

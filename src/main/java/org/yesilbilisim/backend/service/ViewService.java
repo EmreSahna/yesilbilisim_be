@@ -17,7 +17,7 @@ public interface ViewService {
 
     List<CardViewResponse> getServices();
 
-    ImageView createImage(ImageViewRequest imageViewRequest);
+    //ImageView createImage(ImageViewRequest imageViewRequest);
 
     HomepageResponse getHomepage();
 

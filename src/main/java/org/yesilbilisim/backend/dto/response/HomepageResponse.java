@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HomepageResponse {
-    private List<String> sliders;
+    private List<BlogsNavigatorResponse> blogs;
     private List<String> companies;
     private List<CardViewResponse> cards;
 }

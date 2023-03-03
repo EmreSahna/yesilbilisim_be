@@ -11,6 +11,7 @@ import org.yesilbilisim.backend.entity.Views.ImageView;
 import org.yesilbilisim.backend.entity.Views.ViewType;
 import org.yesilbilisim.backend.repository.CardViewRepository;
 import org.yesilbilisim.backend.repository.ImageViewRepository;
+import org.yesilbilisim.backend.service.BlogService;
 import org.yesilbilisim.backend.service.ViewService;
 
 import java.util.List;
@@ -20,10 +21,12 @@ import java.util.stream.Collectors;
 public class ViewServiceImpl implements ViewService {
     private final CardViewRepository cardViewRepository;
     private final ImageViewRepository imageViewRepository;
+    private final BlogService blogService;
 
-    public ViewServiceImpl(CardViewRepository cardViewRepository, ImageViewRepository imageViewRepository) {
+    public ViewServiceImpl(CardViewRepository cardViewRepository, ImageViewRepository imageViewRepository, BlogService blogService) {
         this.cardViewRepository = cardViewRepository;
         this.imageViewRepository = imageViewRepository;
+        this.blogService = blogService;
     }
 
     @Override
@@ -37,6 +40,7 @@ public class ViewServiceImpl implements ViewService {
         .build());
     }
 
+    /*
     @Override
     public ImageView createImage(ImageViewRequest imageViewRequest) {
         return imageViewRepository.save(ImageView.builder()
@@ -44,6 +48,7 @@ public class ViewServiceImpl implements ViewService {
             .type(ViewType.valueOf(imageViewRequest.getType()))
         .build());
     }
+     */
 
     @Override
     public List<CardViewResponse> getSolutions() {
@@ -66,14 +71,14 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public HomepageResponse getHomepage() {
         return HomepageResponse.builder()
-            .sliders(imageViewRepository.findAllByType(ViewType.Carousel).stream().map(imageView -> imageView.getImage()).collect(Collectors.toList()))
-            .companies(imageViewRepository.findAllByType(ViewType.Company).stream().map(imageView -> imageView.getImage()).collect(Collectors.toList()))
+            .companies(imageViewRepository.findAll().stream().map(imageView -> imageView.getImage()).collect(Collectors.toList()))
             .cards(cardViewRepository.findAllByOrder().stream().map(cardView -> CardViewResponse.builder()
                     .title(cardView.getTitle())
                     .icon(cardView.getIcon())
                     .url(cardView.getId())
                     .build()).collect(Collectors.toList())
             )
+            .blogs(blogService.getBlogsNavigator())
         .build();
     }
 
