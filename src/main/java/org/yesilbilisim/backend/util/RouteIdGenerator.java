@@ -16,11 +16,26 @@ public class RouteIdGenerator implements IdentifierGenerator {
             Blog blog = (Blog) object;
             String name = blog.getTitle();
 
-            String id = Normalizer.normalize(name, Normalizer.Form.NFD)
+            String[] ids = Normalizer.normalize(name, Normalizer.Form.NFD)
                     .replaceAll("[^\\p{ASCII}]", "")
                     .replaceAll("[^\\w\\- ]", "")
-                    .replaceAll("\\s", "-")
-                    .toLowerCase(Locale.ENGLISH);
+                    .replaceAll("\\s", " ")
+                    .toLowerCase(Locale.ENGLISH)
+                    .split(" ");
+
+            String id = "";
+            int i = 0;
+            int j= 0;
+            while (i < 3 && j < ids.length) {
+                if (ids[j].length() > 0) {
+                    id = id.concat(ids[j]);
+                    if (i < 2){
+                        id = id.concat("-");
+                    }
+                    i++;
+                }
+                j++;
+            }
             return id;
         }
         if (object instanceof CardView) {

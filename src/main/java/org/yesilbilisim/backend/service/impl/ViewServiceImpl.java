@@ -6,6 +6,7 @@ import org.yesilbilisim.backend.dto.request.ImageViewRequest;
 import org.yesilbilisim.backend.dto.response.CardPageResponse;
 import org.yesilbilisim.backend.dto.response.CardViewResponse;
 import org.yesilbilisim.backend.dto.response.HomepageResponse;
+import org.yesilbilisim.backend.dto.response.ImageViewResponse;
 import org.yesilbilisim.backend.entity.Views.CardView;
 import org.yesilbilisim.backend.entity.Views.ImageView;
 import org.yesilbilisim.backend.entity.Views.ViewType;
@@ -30,27 +31,6 @@ public class ViewServiceImpl implements ViewService {
     }
 
     @Override
-    public CardView createCard(CardViewRequest cardViewRequest) {
-        return cardViewRepository.save(CardView.builder()
-            .title(cardViewRequest.getTitle())
-            .cardContent(cardViewRequest.getCardContent())
-            .icon(cardViewRequest.getIcon())
-            .type(ViewType.valueOf(cardViewRequest.getType()))
-            .orderCard(cardViewRequest.getOrderCard())
-        .build());
-    }
-
-    /*
-    @Override
-    public ImageView createImage(ImageViewRequest imageViewRequest) {
-        return imageViewRepository.save(ImageView.builder()
-            .image(imageViewRequest.getImage())
-            .type(ViewType.valueOf(imageViewRequest.getType()))
-        .build());
-    }
-     */
-
-    @Override
     public List<CardViewResponse> getSolutions() {
         return cardViewRepository.findSolutions().stream().map(cardView -> CardViewResponse.builder()
             .title(cardView.getTitle())
@@ -71,7 +51,10 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public HomepageResponse getHomepage() {
         return HomepageResponse.builder()
-            .companies(imageViewRepository.findAll().stream().map(imageView -> imageView.getImage()).collect(Collectors.toList()))
+            .companies(imageViewRepository.findAll().stream().map(imageView -> ImageViewResponse.builder()
+                    .image(imageView.getImage())
+                    .alt(imageView.getAlt())
+                    .build()).collect(Collectors.toList()))
             .cards(cardViewRepository.findAllByOrder().stream().map(cardView -> CardViewResponse.builder()
                     .title(cardView.getTitle())
                     .icon(cardView.getIcon())

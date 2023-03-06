@@ -23,5 +23,6 @@ public class Blog {
     private String createdDate;
     @Column(length = 10000)
     private String blogContent;
+    private String tags;
     private String thumbnailImage;
 }

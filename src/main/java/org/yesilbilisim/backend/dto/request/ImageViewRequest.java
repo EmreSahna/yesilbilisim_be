@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ImageViewRequest {
     private String image;
-    private String type;
+    private String alt;
 }

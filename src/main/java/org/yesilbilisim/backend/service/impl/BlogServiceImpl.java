@@ -15,6 +15,7 @@ import org.yesilbilisim.backend.service.BlogService;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,7 @@ public class BlogServiceImpl implements BlogService {
                 .createdDate(sdf.format(new Timestamp(System.currentTimeMillis())))
                 .thumbnailImage(blogRequest.getThumbnailImage())
                 .blogContent(blogRequest.getBlogContent())
+                .tags(blogRequest.getTags())
                 .build());
     }
 
@@ -46,6 +48,7 @@ public class BlogServiceImpl implements BlogService {
                 .description(blog.getDescription())
                 .createdDate(blog.getCreatedDate().substring(0, (blog.getCreatedDate().length()-6)))
                 .blogContent(blog.getBlogContent())
+                .tags(blog.getTags())
                 .build();
     }
 

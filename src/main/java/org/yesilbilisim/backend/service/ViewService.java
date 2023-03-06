@@ -13,11 +13,7 @@ import java.util.List;
 public interface ViewService {
     List<CardViewResponse> getSolutions();
 
-    CardView createCard(CardViewRequest cardViewRequest);
-
     List<CardViewResponse> getServices();
-
-    //ImageView createImage(ImageViewRequest imageViewRequest);
 
     HomepageResponse getHomepage();
 

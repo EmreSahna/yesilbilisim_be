@@ -16,23 +16,9 @@ import java.util.List;
 @RequestMapping("/view")
 public class ViewController {
     private final ViewService viewService;
-
     public ViewController(ViewService viewService) {
         this.viewService = viewService;
     }
-
-    @PostMapping("/create-card")
-    public CardView createCard(@RequestBody CardViewRequest cardViewRequest) {
-        return viewService.createCard(cardViewRequest);
-    }
-
-    /*
-    @PostMapping("/create-image")
-    public ImageView createImage(@RequestBody ImageViewRequest imageViewRequest) {
-        return viewService.createImage(imageViewRequest);
-    }
-     */
-
     @GetMapping("/solutions")
     public List<CardViewResponse> getSolutions() {
         return viewService.getSolutions();

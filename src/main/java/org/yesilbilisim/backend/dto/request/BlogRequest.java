@@ -8,4 +8,5 @@ public class BlogRequest {
     private String description;
     private String blogContent;
     private String thumbnailImage;
+    private String tags;
 }
